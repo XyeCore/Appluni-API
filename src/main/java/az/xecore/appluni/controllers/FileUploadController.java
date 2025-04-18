@@ -2,6 +2,7 @@ package az.xecore.appluni.controllers;
 
 import az.xecore.appluni.models.UploadedFile;
 import az.xecore.appluni.services.FileStorageService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -18,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 @RestController
+@Tag(name = "Uploaded files")
 @RequestMapping("/api/files")
 @RequiredArgsConstructor
 public class FileUploadController {

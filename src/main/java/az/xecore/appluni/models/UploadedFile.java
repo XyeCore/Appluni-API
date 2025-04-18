@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "uploaded_files")
+@Table(name = "uploaded_file")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
