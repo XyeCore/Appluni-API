@@ -1,5 +1,7 @@
 package az.xecore.appluni.services;
 
+import az.xecore.appluni.exceptions.UserAlreadyExistsException;
+import az.xecore.appluni.exceptions.UserNotFoundException;
 import az.xecore.appluni.models.User;
 import az.xecore.appluni.repos.UserRepository;
 import az.xecore.appluni.utils.Role;
@@ -8,83 +10,98 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UsersService {
     private final UserRepository repository;
 
     /**
-     * Сохранение пользователя
+     * Saves a user
      *
-     * @return сохраненный пользователь
+     * @param user the user to save
+     * @return the saved user
      */
+    @Transactional
     public User save(User user) {
         return repository.save(user);
     }
 
-
     /**
-     * Создание пользователя
+     * Creates a new user
      *
-     * @return созданный пользователь
+     * @param user the user to create
+     * @return the created user
+     * @throws UserAlreadyExistsException if username or email already exists
      */
+    @Transactional
     public User create(User user) {
         if (repository.existsByUsername(user.getUsername())) {
-            // Заменить на свои исключения
-            throw new RuntimeException("Пользователь с таким именем уже существует");
+            throw new UserAlreadyExistsException("Username already exists: " + user.getUsername());
         }
 
         if (repository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Пользователь с таким email уже существует");
+            throw new UserAlreadyExistsException("Email already exists: " + user.getEmail());
         }
 
         return save(user);
     }
 
     /**
-     * Получение пользователя по имени пользователя
+     * Gets user by username
      *
-     * @return пользователь
+     * @param username the username to search for
+     * @return the found user
+     * @throws UsernameNotFoundException if user not found
      */
     public User getByUsername(String username) {
         return repository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
-
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
     /**
-     * Получение пользователя по имени пользователя
-     * <p>
-     * Нужен для Spring Security
+     * Provides UserDetailsService implementation
      *
-     * @return пользователь
+     * @return UserDetailsService instance
      */
     public UserDetailsService userDetailsService() {
         return this::getByUsername;
     }
 
     /**
-     * Получение текущего пользователя
+     * Gets the currently authenticated user
      *
-     * @return текущий пользователь
+     * @return the current user
+     * @throws UsernameNotFoundException if user not found
      */
     public User getCurrentUser() {
-        // Получение имени пользователя из контекста Spring Security
-        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return getByUsername(username);
     }
 
+    /**
+     * Gets user by ID
+     *
+     * @param id the user ID
+     * @return the found user
+     * @throws UserNotFoundException if user not found
+     */
+    public User getUserById(String id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+    }
 
     /**
-     * Выдача прав администратора текущему пользователю
-     * <p>
-     * Нужен для демонстрации
+     * Grants admin role to current user (for demonstration purposes)
+     *
+     * @deprecated This is for demo only, remove in production
      */
     @Deprecated
-    public void getAdmin() {
-        var user = getCurrentUser();
+    @Transactional
+    public void grantAdminToCurrentUser() {
+        User user = getCurrentUser();
         user.setRole(Role.ROLE_ADMIN);
         save(user);
     }

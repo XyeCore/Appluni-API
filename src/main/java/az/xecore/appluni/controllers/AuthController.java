@@ -1,15 +1,13 @@
 package az.xecore.appluni.controllers;
 
-import az.xecore.appluni.DTO.req.SignInRequest;
-import az.xecore.appluni.DTO.req.SignUpRequest;
-import az.xecore.appluni.DTO.res.JwtAuthenticationResponse;
+import az.xecore.appluni.dto.req.SignInRequest;
+import az.xecore.appluni.dto.req.SignUpRequest;
+import az.xecore.appluni.dto.res.JwtAuthenticationResponse;
 import az.xecore.appluni.services.AuthenticationService;
-import az.xecore.appluni.services.UsersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

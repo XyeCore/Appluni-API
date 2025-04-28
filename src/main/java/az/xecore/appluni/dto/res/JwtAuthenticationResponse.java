@@ -1,4 +1,4 @@
-package az.xecore.appluni.DTO.res;
+package az.xecore.appluni.dto.res;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

@@ -1,10 +1,10 @@
 package az.xecore.appluni.models;
 
+import az.xecore.appluni.utils.Degree;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name="program")
 @Data
+@Getter
 @NoArgsConstructor
 public class Program {
 
@@ -20,7 +21,8 @@ public class Program {
     @Column(name = "id",unique = true,updatable = false)
     private String id;
     private String title;
-    private String degree_level;
+    @Column(name = "degree_level")
+    private Degree degreeLevel;
 
     private String language;
     @ManyToOne

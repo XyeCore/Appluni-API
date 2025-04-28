@@ -1,8 +1,8 @@
 package az.xecore.appluni.services;
 
-import az.xecore.appluni.DTO.req.SignInRequest;
-import az.xecore.appluni.DTO.req.SignUpRequest;
-import az.xecore.appluni.DTO.res.JwtAuthenticationResponse;
+import az.xecore.appluni.dto.req.SignInRequest;
+import az.xecore.appluni.dto.req.SignUpRequest;
+import az.xecore.appluni.dto.res.JwtAuthenticationResponse;
 
 import az.xecore.appluni.utils.Role;
 import az.xecore.appluni.models.User;
