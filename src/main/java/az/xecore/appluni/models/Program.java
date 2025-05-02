@@ -1,6 +1,7 @@
 package az.xecore.appluni.models;
 
 import az.xecore.appluni.utils.Degree;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -25,10 +26,13 @@ public class Program {
     private Degree degreeLevel;
 
     private String language;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
     private List<Application> applications;
 }

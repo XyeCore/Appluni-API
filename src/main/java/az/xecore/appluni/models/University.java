@@ -1,5 +1,6 @@
 package az.xecore.appluni.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class University {
     private String country;
     private String city;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL)
     private List<Program> programs;
 }
