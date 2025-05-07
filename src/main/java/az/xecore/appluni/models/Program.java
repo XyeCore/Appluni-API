@@ -27,7 +27,7 @@ public class Program {
 
     private String language;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;

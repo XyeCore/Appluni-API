@@ -59,6 +59,7 @@ public class ApplicationController {
                     @Parameter(name = "page", in = ParameterIn.QUERY, description = "Page number"),
                     @Parameter(name = "size", in = ParameterIn.QUERY, description = "Page size"),
                     @Parameter(name = "sort", in = ParameterIn.QUERY, description = "Sorting criteria")
+
             })
     public ResponseEntity<Page<Application>> getApplications(
             @RequestParam(required = false) String userId,

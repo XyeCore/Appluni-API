@@ -7,6 +7,8 @@ import az.xecore.appluni.models.Program;
 import az.xecore.appluni.models.User;
 import az.xecore.appluni.repos.ApplicationRepository;
 import az.xecore.appluni.utils.Status;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -43,8 +45,15 @@ public class ApplicationService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Application> getUserApplications(String userId, Pageable pageable) {
+    public Page<Application> getUserApplications(String userId, Pageable pageable  ) {
         return applicationRepository.findAllByUserId(userId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Application> getUserApplications(String userId, Pageable pageable, boolean deleted ) {
+        if (!deleted)
+            return applicationRepository.findAllByUserId(userId, pageable);
+        return applicationRepository.findAllByUserIdAndDeleted(userId, pageable);
     }
 
     @Transactional(readOnly = true)

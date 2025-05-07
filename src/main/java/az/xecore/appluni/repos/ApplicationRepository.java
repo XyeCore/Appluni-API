@@ -18,6 +18,9 @@ public interface ApplicationRepository extends JpaRepository<Application, String
     @Query("SELECT a FROM Application a WHERE a.user.id = :userId AND a.deleted = false")
     Page<Application> findAllByUserId(@Param("userId") String userId, Pageable pageable);
 
+    @Query("SELECT a FROM Application a WHERE a.user.id = :userId AND a.deleted = true")
+    Page<Application> findAllByUserIdAndDeleted(@Param("userId") String userId, Pageable pageable);
+
     @Query("SELECT a FROM Application a WHERE a.program.id = :programId AND a.deleted = false")
     Page<Application> findAllByProgramId(@Param("programId") String programId, Pageable pageable);
 
@@ -30,5 +33,6 @@ public interface ApplicationRepository extends JpaRepository<Application, String
     boolean existsByUserAndProgramAndDeletedFalse(User user, Program program);
 
     //existsByUserAndProgramAndDeletedFalse
+
 
 }

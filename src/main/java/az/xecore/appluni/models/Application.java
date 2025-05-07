@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "applications")
@@ -17,9 +18,8 @@ import java.time.LocalDateTime;
 @Where(clause = "deleted = false") // Soft delete filter
 public class Application {
     @Id
-    @UuidGenerator
-    @Column(name = "id", unique = true, updatable = false)
-    private String id;
+    @Column(name = "id", unique = true, updatable = false, length = 16)
+    private String id; // Format: "APL-XXXX-XXXX"
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -42,9 +42,35 @@ public class Application {
 
     @PrePersist
     protected void onCreate() {
-        this.submittedAt = LocalDateTime.now();
-        if (this.status == null) {
-            this.status = Status.PENDING; // Default status
+        // Generate user-friendly ID
+        if (this.id == null) {
+            this.id = generateApplicationId();
         }
+
+        // Set submission time
+        this.submittedAt = LocalDateTime.now();
+
+        // Set default status if null
+        if (this.status == null) {
+            this.status = Status.PENDING;
+        }
+    }
+
+    private String generateApplicationId() {
+        String timestamp = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyMMddHHmm"));
+
+        String randomChars = generateRandomChars(4);
+
+        return "APL-" + timestamp.substring(0,6) + "-" + randomChars;
+    }
+
+    private String generateRandomChars(int length) {
+        String chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Excluded confusing chars
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(ThreadLocalRandom.current().nextInt(chars.length())));
+        }
+        return sb.toString();
     }
 }

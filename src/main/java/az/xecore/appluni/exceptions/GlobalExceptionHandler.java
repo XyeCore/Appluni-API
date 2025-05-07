@@ -23,6 +23,25 @@
 //        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 //    }
 //
+//@ExceptionHandler(UniversityNotFoundException.class)
+//public ProblemDetail handleUniversityNotFound(UniversityNotFoundException ex) {
+//    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+//            HttpStatus.NOT_FOUND,
+//            ex.getMessage()
+//    );
+//    problemDetail.setTitle("University Not Found");
+//    return problemDetail;
+//}
+//
+//@ExceptionHandler(UniversityAlreadyExistsException.class)
+//public ProblemDetail handleUniversityAlreadyExists(UniversityAlreadyExistsException ex) {
+//    ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+//            HttpStatus.CONFLICT,
+//            ex.getMessage()
+//    );
+//    problemDetail.setTitle("University Already Exists");
+//    return problemDetail;
+//}
 //    // Other exception handlers...
 //
 //    record ErrorResponse(int status, String error, String message) {}
