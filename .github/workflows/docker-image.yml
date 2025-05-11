@@ -16,15 +16,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Create .env file
-      run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
-      
+
     - name: Build the Docker image
-      # run: docker build . --file Dockerfile --tag fntm04ka/appluni-backend:latest
-      run: docker build --env-file .env --file Dockerfile --tag fntm04ka/appluni-backend:latest .
-      
-  
+      run: |
+        docker build . \
+          --build-arg SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
+          --build-arg SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+          --build-arg SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+          --build-arg TOKEN_SIGNING_KEY=${{ secrets.TOKEN_SIGNING_KEY }} \
+          --tag fntm04ka/appluni-backend:latest
+
       
     - name: login to Dockerhub
       run:
