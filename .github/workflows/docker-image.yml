@@ -16,11 +16,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Create .env file
+      run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+      
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag fntm04ka/appluni-backend:latest
+      
     - name: login to Dockerhub
       run:
         docker login -u fntm04ka -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        
     - name: push image to Dockerhub
       run:
         docker push fntm04ka/appluni-backend:latest
