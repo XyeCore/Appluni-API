@@ -25,6 +25,7 @@ public class AppluniApplication {
 //        // Test logs
         System.out.println("DB URL: " + System.getenv("SPRING_DATASOURCE_URL"));
         System.out.println("DB USERNAME: " + System.getenv("SPRING_DATASOURCE_USERNAME"));
+        System.out.println("DB PASSWORD: " + System.getenv("SPRING_DATASOURCE_PASSWORD"));
 
 
 
