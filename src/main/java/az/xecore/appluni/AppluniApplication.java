@@ -23,8 +23,8 @@ public class AppluniApplication {
 //        System.setProperty("TOKEN_SIGNING_KEY", dotenv.get("TOKEN_SIGNING_KEY"));
 //
 //        // Test logs
-        System.out.println("DB URL: " + System.getProperty("SPRING_DATASOURCE_URL"));
-        System.out.println("DB USERNAME: " + System.getProperty("SPRING_DATASOURCE_USERNAME"));
+        System.out.println("DB URL: " + System.getenv("SPRING_DATASOURCE_URL"));
+        System.out.println("DB USERNAME: " + System.getenv("SPRING_DATASOURCE_USERNAME"));
 
 
 
