@@ -32,9 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
-# Application properties
-/src/main/resources/application.properties
-/src/main/resources/application.yml
+## Application properties
+#/src/main/resources/application.properties
+#/src/main/resources/application.yml
 
-# Alternatively, you can ignore all properties files
-# *.properties
+### Env ###
+.env
