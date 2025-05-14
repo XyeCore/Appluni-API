@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-@RestControllerAdvice(basePackages = "az.xecore.appluni.controller") // Указываем конкретный пакет
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ProgramNotFoundException.class)
@@ -58,6 +58,18 @@ public class GlobalExceptionHandler {
                         ex.getMessage()
                 ));
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ProblemDetail handleUserAlreadyExists(UniversityAlreadyExistsException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.CONFLICT,
+                ex.getMessage()
+        );
+        problemDetail.setTitle("User Already Exists");
+        return problemDetail;
+    }
+
+
 
     record ErrorResponse(int status, String error, String message) {}
 }
