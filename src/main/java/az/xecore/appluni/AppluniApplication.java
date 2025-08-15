@@ -15,6 +15,7 @@ public class AppluniApplication {
 
     public static void main(String[] args) {
 
+
         // Load .env before Spring starts
         if (Files.exists(Paths.get(".env"))) {
             Dotenv dotenv = Dotenv.configure().load();
