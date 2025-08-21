@@ -13,14 +13,13 @@ jobs:
   call:
     uses: XyeCore/.github/.github/workflows/build-deploy.yml@main
     with:
-      image_name:       ${{ secrets.DOCKERHUB_USERNAME }}/appluni-api
-      k8s_namespace:    prod
-      k8s_deployment:   backend                 # имя деплоймента в кластерe
-      context:          .
-      dockerfile:       ./Dockerfile
-      container_name:   ""                      # или задай явное имя
+      image_name:      ${{ vars.DOCKERHUB_USER }}/appluni-api
+      k8s_namespace:   prod
+      k8s_deployment:  backend
+      context:         .
+      dockerfile:      ./Dockerfile
+      container_name:  ""
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN:    ${{ secrets.DOCKERHUB_TOKEN }}
       KUBECONFIG_BASE64:  ${{ secrets.KUBECONFIG_BASE64 }}
-    environment: prod
