@@ -18,9 +18,12 @@ jobs:
       k8s_deployment:  backend
       context:         .
       dockerfile:      ./Dockerfile
-      build_args: |     # <— build-args как в старом воркфлоу
+      build_args: |
         SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
         SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
         SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
         TOKEN_SIGNING_KEY=${{ secrets.TOKEN_SIGNING_KEY }}
-    secrets: inherit
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN:    ${{ secrets.DOCKERHUB_TOKEN }}
+      KUBECONFIG_BASE64:  ${{ secrets.KUBECONFIG_BASE64 }}
