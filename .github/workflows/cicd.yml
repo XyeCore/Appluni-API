@@ -11,15 +11,16 @@ concurrency:
 
 jobs:
   call:
-    uses: XyeCore/.github/.github/workflows/build-deploy.yml@main
+    uses: XyeCore/.github/workflows/build-deploy.yml@main
     with:
-      image_name:      ${{ vars.DOCKERHUB_USER }}/appluni-api
+      image_name:      ${{ vars.DOCKERHUB_USER }}/appluni-backend
       k8s_namespace:   prod
       k8s_deployment:  backend
       context:         .
       dockerfile:      ./Dockerfile
-      container_name:  ""
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN:    ${{ secrets.DOCKERHUB_TOKEN }}
-      KUBECONFIG_BASE64:  ${{ secrets.KUBECONFIG_BASE64 }}
+      build_args: |     # <— build-args как в старом воркфлоу
+        SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
+        SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+        TOKEN_SIGNING_KEY=${{ secrets.TOKEN_SIGNING_KEY }}
+    secrets: inherit
