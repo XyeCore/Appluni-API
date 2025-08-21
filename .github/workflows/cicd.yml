@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   call:
-    uses: XyeCore/.github/workflows/build-deploy.yml@main
+    uses: XyeCore/.github/.github/workflows/build-deploy.yml@main
     with:
       image_name:      ${{ vars.DOCKERHUB_USER }}/appluni-backend
       k8s_namespace:   prod
